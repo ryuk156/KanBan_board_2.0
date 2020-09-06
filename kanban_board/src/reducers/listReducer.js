@@ -1,3 +1,7 @@
+import { CONSTANTS } from "../action/index";
+import { v4 as uuidv4 } from "uuid";
+let listid = uuidv4();
+let cardid = uuidv4();
 const initialState = [
   {
     title: "Welcome!",
@@ -35,6 +39,30 @@ const initialState = [
 
 const listReducer = (state = initialState, action) => {
   switch (action.type) {
+    case CONSTANTS.ADD_LIST:
+      const newList = {
+        title: action.payload,
+        cards: [],
+        id: listid,
+      };
+      return [...state, newList];
+    case CONSTANTS.ADD_CARD:
+      const newCard = {
+        text: action.payload.text,
+        id: cardid,
+      };
+
+      const newState = state.map((list) => {
+        if (list.id === action.payload.listid) {
+          return {
+            ...list,
+            cards: [...list.cards, newCard],
+          };
+        } else {
+          return list;
+        }
+      });
+      return newState;
     default:
       return state;
   }

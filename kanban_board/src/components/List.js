@@ -2,7 +2,7 @@ import React from "react";
 import Cards from "./Card";
 import ActionButton from "./ActionButton";
 
-function List({ title, cards }) {
+function List({ title, cards, listid }) {
   return (
     <div style={style.root}>
       <h1>{title}</h1>
@@ -10,7 +10,7 @@ function List({ title, cards }) {
       {cards.map((card) => {
         return <Cards text={card.text} key={card.id} />;
       })}
-      <ActionButton card />
+      <ActionButton card listid={listid} />
     </div>
   );
 }

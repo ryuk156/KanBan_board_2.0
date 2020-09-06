@@ -8,10 +8,18 @@ class App extends Component {
     const { lists } = this.props;
     return (
       <div className="App">
-        hello
+        <h>KANBAN BOARD</h>
+        <hr></hr>
         <div style={style.container}>
           {lists.map((list) => {
-            return <List title={list.title} key={list.id} cards={list.cards} />;
+            return (
+              <List
+                listid={list.id}
+                title={list.title}
+                key={list.id}
+                cards={list.cards}
+              />
+            );
           })}
           <ActionButton list />
         </div>
