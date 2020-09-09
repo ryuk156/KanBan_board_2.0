@@ -6,3 +6,10 @@ export const addCard = (listid, text) => {
     payload: { text, listid },
   };
 };
+
+export const editCard = (id, listid, newText) => {
+  return {
+    type: CONSTANTS.EDIT_CARD,
+    payload: { id, listid, newText },
+  };
+};
