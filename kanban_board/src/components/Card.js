@@ -4,36 +4,42 @@ import { Card, Typography, CardContent } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import styled from "styled-components";
 import Form from "./Form";
+import NewButton from "./NewButton";
 import { editCard } from "../action";
 import { connect } from "react-redux";
 
-const CardContainer = styled.div`
-  margin-bottom: 0 0 8px 0;
-  position: relative;
-`;
-
-const EditButton = styled(EditIcon)`
-  position: absolute;
-  display: none;
-  right: 5px;
-  top: 5px;
-  opacity: 0.5;
-  ${CardContainer}:hover & {
-    display: block;
-    cursor: pointer;
-  }
-  &:hover {
-    opacity: 0.8;
-  }
-`;
-
-function Cards({ text, id, listid, index, dispatch }) {
+const Cards = React.memo(({ text, id, listid, index, dispatch }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [cardText, setText] = useState(text);
 
+  const CardContainer = styled.div`
+    margin-bottom: 8px;
+    position: relative;
+    max-width: 100%;
+    word-wrap: break-word;
+  `;
+
+  const EditButton = styled(EditIcon)`
+    position: absolute;
+    display: none;
+    right: 5px;
+    top: 5px;
+    opacity: 0.5;
+    ${CardContainer}:hover & {
+      display: block;
+      cursor: pointer;
+    }
+    &:hover {
+      opacity: 0.8;
+    }
+  `;
+
   const closeForm = (e) => {
-    console.log("clicked");
     setIsEditing(false);
+  };
+
+  const handleChange = (e) => {
+    setText(e.target.value);
   };
 
   const saveCard = (e) => {
@@ -44,12 +50,9 @@ function Cards({ text, id, listid, index, dispatch }) {
 
   const renderEditForm = () => {
     return (
-      <Form
-        text={cardText}
-        setText={setText}
-        closeForm={closeForm}
-        actionButtonClicked={saveCard}
-      />
+      <Form text={cardText} onChange={handleChange} closeForm={closeForm}>
+        <NewButton onClick={saveCard}>Save</NewButton>
+      </Form>
     );
   };
 
@@ -64,7 +67,10 @@ function Cards({ text, id, listid, index, dispatch }) {
             onDoubleClick={() => setIsEditing(true)}
           >
             <Card>
-              <EditButton fontSize="small" />
+              <EditButton
+                fontSize="small"
+                onMouseDown={() => setIsEditing(true)}
+              />
               <CardContent>
                 <Typography>{text}</Typography>
               </CardContent>
@@ -76,6 +82,6 @@ function Cards({ text, id, listid, index, dispatch }) {
   };
 
   return isEditing ? renderEditForm() : renderCard();
-}
+});
 
 export default connect()(Cards);

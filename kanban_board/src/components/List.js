@@ -11,10 +11,10 @@ const ListContainer = styled.div`
   width: 300px;
   padding: 8px;
   height: 100%;
-  margin-right: 0 8px 0 0;
+  margin-right: 8px;
 `;
 
-function List({ title, cards, listid, index }) {
+const List = React.memo(({ title, cards, listid, index }) => {
   return (
     <Draggable draggableId={String(listid)} index={index}>
       {(provided) => (
@@ -50,11 +50,10 @@ function List({ title, cards, listid, index }) {
               </div>
             )}
           </Droppable>
-          ;
         </ListContainer>
       )}
     </Draggable>
   );
-}
+});
 
 export default List;

@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import AddIcon from "@material-ui/icons/Add";
-import { Card, Button } from "@material-ui/core";
-import Textarea from "react-textarea-autosize";
-import CloseIcon from "@material-ui/icons/Close";
 import { connect } from "react-redux";
 import { addList, addCard } from "../action";
 import styled from "styled-components";
+import OpenForm from "./OpenForm";
+import NewButton from "./NewButton";
+import Form from "./Form";
 
 class ActionButton extends Component {
   state = {
@@ -23,7 +23,7 @@ class ActionButton extends Component {
     });
   };
 
-  handlechange = (e) => {
+  handleInputChange = (e) => {
     this.setState({
       text: e.target.value,
     });
@@ -54,7 +54,8 @@ class ActionButton extends Component {
 
   renderAddbutton = () => {
     const { list } = this.props;
-    const buttonText = list ? "Add another list" : "Add another card";
+
+    const buttonText = list ? "+ Add another list" : "+ Add another card";
     const buttonTextOpacity = list ? 1 : 0.5;
     const buttonTextColor = list ? "white" : "inherit";
     const buttonTextBackground = list ? "rgba(0,0,0,0.15)" : "inherit";
@@ -82,70 +83,26 @@ class ActionButton extends Component {
     );
   };
 
-  renderForm = () => {
-    const { list } = this.props;
-    const placeholder = list ? "Enter list title" : "Enter Title for card";
-    const buttontitle = list ? "Add list" : "Add card";
-
-    const Container = styled.div`
-      width: ${list ? "300px" : "100%"};
-    `;
-
-    const StyledCard = styled(Card)`
-      min-height: 85px;
-      padding: 6px 8px 2px;
-    `;
-
-    const StyledTextArea = styled(Textarea)`
-      resize: none;
-      width: 100%;
-      overflow: hidden;
-      outline: none;
-      border: none;
-    `;
-
-    const StyledButton = styled(Button)`
-      && {
-        color: white;
-        background: #5aac44;
-      }
-    `;
-
-    const ButtonContainer = styled.div`
-      margin-top: 8px;
-      display: flex;
-      align-items: center;
-      margin-left: 8px;
-    `;
-
-    return (
-      <Container>
-        <StyledCard>
-          <StyledTextArea
-            placeholder={placeholder}
-            autoFocus
-            onBlur={this.closeForm}
-            value={this.state.text}
-            onChange={this.handlechange}
-          />
-        </StyledCard>
-        <ButtonContainer>
-          <StyledButton
-            variant="contained"
-            onMouseDown={list ? this.handlelistsubmit : this.handlecardsubmit}
-            children={buttontitle}
-          />
-
-          <CloseIcon
-            style={{ marginLeft: 8, cursor: "pointer" }}
-            onClick={this.closeForm}
-          />
-        </ButtonContainer>
-      </Container>
-    );
-  };
   render() {
-    return this.state.formOpen ? this.renderForm() : this.renderAddbutton();
+    const { text } = this.state;
+    const { list } = this.props;
+    return this.state.formOpen ? (
+      <Form
+        text={text}
+        onChange={this.handleInputChange}
+        closeForm={this.closeForm}
+      >
+        <NewButton
+          onClick={list ? this.handlelistsubmit : this.handlecardsubmit}
+        >
+          {list ? "Add List" : "Add Card"}
+        </NewButton>
+      </Form>
+    ) : (
+      <OpenForm list={list} onClick={this.openForm}>
+        {list ? "+ Add another list" : "+ Add another card"}
+      </OpenForm>
+    );
   }
 }
 
