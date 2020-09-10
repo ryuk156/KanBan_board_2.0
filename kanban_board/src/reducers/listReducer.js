@@ -120,6 +120,36 @@ const listReducer = (state = initialState, action) => {
         return list;
       });
     }
+
+    case CONSTANTS.DELETE_CARD: {
+      const { id, listid } = action.payload;
+      return state.map((list) => {
+        if (list.id === listid) {
+          const newCards = list.cards.filter((card) => card.id !== id);
+          return { ...list, cards: newCards };
+        } else {
+          return list;
+        }
+      });
+    }
+
+    case CONSTANTS.EDIT_LIST_TITLE: {
+      const { listid, newListTitle } = action.payload;
+      return state.map((list) => {
+        if (list.id === listid) {
+          list.title = newListTitle;
+          return list;
+        } else {
+          return list;
+        }
+      });
+    }
+
+    case CONSTANTS.DELETE_LIST: {
+      const { listid } = action.payload;
+      return state.filter((list) => list.id !== listid);
+    }
+
     default:
       return state;
   }
