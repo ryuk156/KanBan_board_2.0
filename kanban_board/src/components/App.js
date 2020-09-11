@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import List from "./List";
 import { connect } from "react-redux";
 import ActionButton from "./ActionButton";
@@ -11,12 +11,14 @@ const ListContainer = styled.div`
   flex-direction: row;
 `;
 
-class App extends Component {
+class App extends PureComponent {
   onDragEnd = (result) => {
     const { destination, source, draggableId, type } = result;
+
     if (!destination) {
       return;
     }
+
     this.props.dispatch(
       sort(
         source.droppableId,
@@ -28,8 +30,9 @@ class App extends Component {
       )
     );
   };
+
   render() {
-    const { lists } = this.props;
+    const { lists, listOrder, cards } = this.props;
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
         <div className="App">
@@ -41,16 +44,21 @@ class App extends Component {
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
-                {lists.map((list, index) => {
-                  return (
-                    <List
-                      listid={list.id}
-                      title={list.title}
-                      key={list.id}
-                      cards={list.cards}
-                      index={index}
-                    />
-                  );
+                {listOrder.map((listid, index) => {
+                  const list = lists[listid];
+                  if (list) {
+                    const listCards = list.cards.map((cardid) => cards[cardid]);
+
+                    return (
+                      <List
+                        listid={list.id}
+                        title={list.title}
+                        key={list.id}
+                        cards={listCards}
+                        index={index}
+                      />
+                    );
+                  }
                 })}
                 {provided.placeholder}
                 <ActionButton list />
@@ -65,6 +73,8 @@ class App extends Component {
 
 const mapToProps = (state) => ({
   lists: state.lists,
+  listOrder: state.listOrder,
+  cards: state.cards,
 });
 
 export default connect(mapToProps)(App);

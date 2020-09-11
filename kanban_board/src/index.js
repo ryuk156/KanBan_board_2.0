@@ -1,12 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import store from "./store/index.js";
+
 import App from "./components/App";
+import Store from "./store";
 import "./index.css";
 import { createGlobalStyle } from "styled-components";
 import $ from "jquery";
 import * as serviceWorker from "./serviceWorker";
+import { PersistGate } from "redux-persist/integration/react";
+
+const { persistor, store } = Store();
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -17,8 +21,10 @@ const GlobalStyle = createGlobalStyle`
 
 ReactDOM.render(
   <Provider store={store}>
-    <GlobalStyle />
-    <App />
+    <PersistGate loading={null} persistor={persistor}>
+      <GlobalStyle />
+      <App />
+    </PersistGate>
   </Provider>,
   document.getElementById("root")
 );
