@@ -1,5 +1,4 @@
-import { CardMedia } from "@material-ui/core";
-import { CONSTANTS } from "../action/index";
+import { CONSTANTS } from "../action";
 
 let listid = 1;
 let cardid = 0;
@@ -14,8 +13,10 @@ const listReducer = (state = initialState, action) => {
         id: `list-${listid}`,
         cards: [],
       };
+
+      const newState = { ...state, [`list-${listid}`]: newList };
       listid += 1;
-      return [...state, ([`list-${listid}`]: newList)];
+      return newState;
     }
 
     case CONSTANTS.ADD_CARD: {
@@ -47,9 +48,14 @@ const listReducer = (state = initialState, action) => {
         return { ...state, [droppableIdStart]: list };
       }
       if (droppableIdStart !== droppableIdEnd) {
+        // find the list where the drag happened
         const listStart = state[droppableIdStart];
+        // pull out the card from this list
         const card = listStart.cards.splice(droppableIndexStart, 1);
-        const listEnd = state.find((list) => droppableIdEnd === list.id);
+        // find the list where the drag ended
+        const listEnd = state[droppableIdEnd];
+
+        // put the card in the new list
         listEnd.cards.splice(droppableIndexEnd, 0, ...card);
         return {
           ...state,
@@ -57,7 +63,6 @@ const listReducer = (state = initialState, action) => {
           [droppableIdEnd]: listEnd,
         };
       }
-
       return state;
     }
 
