@@ -8,7 +8,6 @@ import Form from "./Form";
 import NewButton from "./NewButton";
 import { editCard, deleteCard } from "../action";
 import { connect } from "react-redux";
-import { useSpring, animated } from "react-spring";
 
 const CardContainer = styled.div`
   margin-bottom: 8px;
@@ -51,12 +50,6 @@ const Cards = React.memo(({ text, id, listid, index, dispatch }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [cardText, setText] = useState(text);
 
-  const props = useSpring({
-    opacity: 1,
-    from: { opacity: 0 },
-    config: { duration: 400 },
-  });
-
   const closeForm = (e) => {
     setIsEditing(false);
   };
@@ -85,30 +78,28 @@ const Cards = React.memo(({ text, id, listid, index, dispatch }) => {
 
   const renderCard = () => {
     return (
-      <animated.div style={props}>
-        <Draggable draggableId={String(id)} index={index}>
-          {(provided) => (
-            <CardContainer
-              {...provided.draggableProps}
-              {...provided.dragHandleProps}
-              ref={provided.innerRef}
-              onDoubleClick={() => setIsEditing(true)}
-            >
-              <Card>
-                <EditButton
-                  fontSize="small"
-                  onMouseDown={() => setIsEditing(true)}
-                />
-                <DeleteButton fontSize="small" onMouseDown={handleDeleteCard} />
+      <Draggable draggableId={String(id)} index={index}>
+        {(provided) => (
+          <CardContainer
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            ref={provided.innerRef}
+            onDoubleClick={() => setIsEditing(true)}
+          >
+            <Card>
+              <EditButton
+                fontSize="small"
+                onMouseDown={() => setIsEditing(true)}
+              />
+              <DeleteButton fontSize="small" onMouseDown={handleDeleteCard} />
 
-                <CardContent>
-                  <Typography>{text}</Typography>
-                </CardContent>
-              </Card>
-            </CardContainer>
-          )}
-        </Draggable>
-      </animated.div>
+              <CardContent>
+                <Typography>{text}</Typography>
+              </CardContent>
+            </Card>
+          </CardContainer>
+        )}
+      </Draggable>
     );
   };
 

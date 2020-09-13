@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 const StyledButton = styled(Button)`
   && {
     color: white;
-    background: #5aac44;
+    background: #3b5998;
   }
 `;
 

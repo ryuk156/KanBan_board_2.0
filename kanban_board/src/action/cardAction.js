@@ -1,9 +1,11 @@
 import { CONSTANTS } from "./index.js";
+import { v4 as uuid } from "uuid";
 
 export const addCard = (listid, text) => {
+  const id = uuid();
   return {
     type: CONSTANTS.ADD_CARD,
-    payload: { text, listid },
+    payload: { text, listid, id },
   };
 };
 

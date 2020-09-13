@@ -1,33 +1,37 @@
 import { CONSTANTS } from "../action";
 
-let listid = 1;
-let cardid = 0;
-
-const initialState = {};
+const initialState = {
+  "list-0": {
+    id: "list-0",
+    cards: ["card-0"],
+    title: "Welcome ! ",
+    board: "board-0",
+  },
+};
 
 const listReducer = (state = initialState, action) => {
   switch (action.type) {
     case CONSTANTS.ADD_LIST: {
+      const { title, id } = action.payload;
       const newList = {
-        title: action.payload,
-        id: `list-${listid}`,
+        title: title,
+        id: `list-${id}`,
         cards: [],
       };
 
-      const newState = { ...state, [`list-${listid}`]: newList };
-      listid += 1;
+      const newState = { ...state, [`list-${id}`]: newList };
+
       return newState;
     }
 
     case CONSTANTS.ADD_CARD: {
-      cardid += 1;
-      const { listid } = action.payload;
+      const { listid, id } = action.payload;
       const list = state[listid];
-      list.cards.push(`card-${cardid}`);
+      list.cards.push(`card-${id}`);
       return { ...state, [listid]: list };
     }
 
-    case CONSTANTS.DRAG_HAPPEN: {
+    case CONSTANTS.DRAG_HAPPENED: {
       const {
         droppableIdStart,
         droppableIdEnd,
