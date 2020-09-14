@@ -1,5 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import DeleteIcon from "@material-ui/icons/Delete";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { deleteBoard } from "../action";
 
 const Thumbnail = styled.div`
   height: 100%;
@@ -11,11 +15,18 @@ const Thumbnail = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  border-radius: 3px;
-  box-shadow: 0 2px 4px grey;
+
   word-wrap: break-word;
 `;
 
+const Container = styled.div`
+  margin: 10px;
+  background: #3b5998;
+  display: flex;
+  box-shadow: 0 2px 4px grey;
+
+  border-radius: 3px;
+`;
 const Title = styled.h4`
   color: white;
   text-decoration: none;
@@ -24,13 +35,25 @@ const Title = styled.h4`
   overflow: hidden !important;
 `;
 
-const BoardThumbnail = ({ title }) => {
+const BoardThumbnail = ({ title, bid, dispatch }) => {
+  const handledeleteboard = (e) => {
+    dispatch(deleteBoard(bid));
+  };
   console.log(title);
   return (
-    <Thumbnail>
-      <Title>{title}</Title>
-    </Thumbnail>
+    <Container>
+      <Thumbnail>
+        <Title>{title}</Title>
+      </Thumbnail>
+
+      <Link to={`/`} style={{ textDecoration: "none", padding: "10px" }}>
+        <DeleteIcon
+          style={{ color: "white", marginTop: "5px" }}
+          onMouseDown={handledeleteboard}
+        />
+      </Link>
+    </Container>
   );
 };
 
-export default BoardThumbnail;
+export default connect()(BoardThumbnail);

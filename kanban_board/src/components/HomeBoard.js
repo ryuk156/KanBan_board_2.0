@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { addBoard } from "../action";
 import BoardThumbnail from "./BoardThumbnail";
+import Button from "@material-ui/core/Button";
 
 const Thumbnails = styled.div`
   flex: 1;
@@ -26,16 +27,16 @@ const HomeContainer = styled.div`
 
 const CreateTitle = styled.h3`
   font-size: 48px;
-  color: white;
+  color: black;
   font-weight: bold;
   font-family: Arial, Helvetica, sans-serif;
 `;
 
 const CreateInput = styled.input`
-  width: 400px;
+  width: 350px;
   height: 50px;
-  font-size: 20px;
-  padding: 10px;
+
+  font-size: 18px;
   box-sizing: border-box;
   border-radius: 3px;
   border: none;
@@ -64,28 +65,51 @@ const Home = ({ boards, boardOrder, dispatch }) => {
       const board = boards[boardID];
 
       return (
-        <Link
-          key={boardID}
-          to={`/${board.id}`}
-          style={{ textDecoration: "none", padding: "10px" }}
-        >
-          <BoardThumbnail {...board} />
-        </Link>
+        <div style={{ textAlign: "center" }}>
+          <Link
+            key={boardID}
+            to={`/${board.id}`}
+            style={{ textDecoration: "none", padding: "10px" }}
+          >
+            <BoardThumbnail {...board} bid={boardID} />
+          </Link>
+        </div>
       );
     });
   };
 
   const renderCreateBoard = () => {
     return (
-      <form onSubmit={handleSubmit} style={{ textAlign: "center" }}>
-        <CreateTitle>Create a new Board</CreateTitle>
-        <CreateInput
-          onChange={handleChange}
-          value={newBoardTitle}
-          placeholder="Your boards title..."
-          type="text"
-        />
-      </form>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <form
+          onSubmit={handleSubmit}
+          style={{ display: "flex", alignItems: "center" }}
+        >
+          <CreateInput
+            onChange={handleChange}
+            value={newBoardTitle}
+            placeholder=" Title..."
+            type="text"
+          />
+        </form>
+        <Button
+          onClick={handleSubmit}
+          style={{
+            color: "white",
+            background: "#3b5998",
+            width: "250px",
+            height: "60px",
+            margin: "20px",
+          }}
+        >
+          + Create New Board
+        </Button>
+      </div>
     );
   };
 

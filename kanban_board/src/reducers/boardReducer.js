@@ -43,6 +43,7 @@ const boardsReducer = (state = initialState, action) => {
     case CONSTANTS.DELETE_LIST: {
       const { listid, boardID } = action.payload;
       const board = state[boardID];
+      console.log(board);
       const lists = board.lists;
       const newLists = lists.filter((id) => id !== listid);
       board.lists = newLists;
