@@ -65,14 +65,16 @@ const Home = ({ boards, boardOrder, dispatch }) => {
       const board = boards[boardID];
 
       return (
-        <div style={{ textAlign: "center" }}>
-          <Link
-            key={boardID}
-            to={`/${board.id}`}
-            style={{ textDecoration: "none", padding: "10px" }}
-          >
-            <BoardThumbnail {...board} bid={boardID} />
-          </Link>
+        <div>
+          <div style={{ textAlign: "center" }}>
+            <Link
+              key={boardID}
+              to={`/board/${board.id}`}
+              style={{ textDecoration: "none", padding: "10px" }}
+            >
+              <BoardThumbnail {...board} bid={boardID} />
+            </Link>
+          </div>
         </div>
       );
     });
