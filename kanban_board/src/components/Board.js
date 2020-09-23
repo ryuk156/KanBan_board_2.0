@@ -48,9 +48,7 @@ class Board extends PureComponent {
     const listOrder = board.lists;
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
-        <div className="App">
-          <h1>KANBAN BOARD</h1>
-          <hr></hr>
+        <div className="App" style={{ padding: "20px" }}>
           <Droppable droppableId="all-list" direction="horizontal" type="list">
             {(provided) => (
               <ListContainer

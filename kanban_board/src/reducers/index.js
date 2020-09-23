@@ -5,10 +5,12 @@ import boardReducer from "./boardReducer";
 import boardOrderReducer from "./boardOrderReducer";
 import activeBoardReducer from "./activeBoardReducer";
 
-export default combineReducers({
+const rootReducer = combineReducers({
   lists: listReducer,
   cards: cardsReducer,
   boards: boardReducer,
   boardOrder: boardOrderReducer,
   activeBoard: activeBoardReducer,
 });
+
+export default rootReducer;
