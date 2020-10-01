@@ -9,6 +9,9 @@ import "./index.css";
 import { createGlobalStyle } from "styled-components";
 import $ from "jquery";
 import * as serviceWorker from "./serviceWorker";
+import { PersistGate } from "redux-persist/integration/react";
+
+const { persistor, store } = Store();
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -19,8 +22,10 @@ const GlobalStyle = createGlobalStyle`
 
 ReactDOM.render(
   <Provider store={Store}>
+   <PersistGate loading={null} persistor={persistor}>
     <GlobalStyle />
     <App />
+   </PersistGate>
   </Provider>,
   document.getElementById("root")
 );
