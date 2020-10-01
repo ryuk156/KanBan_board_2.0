@@ -15,9 +15,3 @@ export const addBoard = (title) => {
   };
 };
 
-export const deleteBoard = (bid) => {
-  return {
-    type: CONSTANTS.DELETE_BOARD,
-    payload: { bid },
-  };
-};
