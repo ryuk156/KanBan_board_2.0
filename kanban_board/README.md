@@ -1,7 +1,11 @@
 ### About 
 
 
+### Technology
+* React
+* Nodejs
+
 ### How to start 
 * git clone
-* yarn install
+* npm install
 * npm run dev
