@@ -9,6 +9,12 @@ import "./index.css";
 import { createGlobalStyle } from "styled-components";
 import $ from "jquery";
 import * as serviceWorker from "./serviceWorker";
+import  rootReducer from './reducers/index.js'
+import {ReactReduxFirebaseProvider} from 'react-redux-firebase';
+import {createFirestoreInstance} from 'redux-firestore'
+import firebase from './config/config.js'
+
+
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -17,10 +23,20 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+const rrfProps={
+  firebase,
+  config:{
+  },
+  dispatch:Store.dispatch,
+  createFirestoreInstance
+}
+
 ReactDOM.render(
   <Provider store={Store}>
+    <ReactReduxFirebaseProvider {...rrfProps} >
     <GlobalStyle />
     <App />
+    </ReactReduxFirebaseProvider>
   </Provider>,
   document.getElementById("root")
 );

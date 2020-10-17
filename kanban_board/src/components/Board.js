@@ -6,17 +6,20 @@ import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { sort, setActiveBoard } from "../action";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import {compose} from 'redux'
+import {firestoreConnect} from 'react-redux-firebase'
 
 const ListContainer = styled.div`
   display: flex;
   flex-direction: row;
+  
 `;
 
 class Board extends PureComponent {
   componentDidMount() {
     // set active trello board here
-    const { boardID } = this.props.match.params;
-
+    const { boardID,listid } = this.props.match.params;
+   
     this.props.dispatch(setActiveBoard(boardID));
   }
   onDragEnd = (result) => {
@@ -39,13 +42,13 @@ class Board extends PureComponent {
   };
 
   render() {
+    
+    
     const { lists, boards, match, cards } = this.props;
     const { boardID } = match.params;
-    const board = boards[boardID];
-    if (!board) {
-      return <p>Board not found</p>;
-    }
-    const listOrder = board.lists;
+    
+    
+    const listOrder = boardID.lists;
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
         <div className="App" style={{ padding: "20px" }}>
@@ -55,22 +58,25 @@ class Board extends PureComponent {
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
-                {listOrder.map((listid, index) => {
-                  const list = lists[listid];
-                  if (list) {
-                    const listCards = list.cards.map((cardid) => cards[cardid]);
-
+                {boards && boards.map((listid) => {
+                 return (
+                   <div>
+                { listid.lists &&  listid.lists.map((lid,index)=>{
+                    const { id } = match.params;
                     return (
+                      
                       <List
-                        listid={list.id}
-                        title={list.title}
-                        key={list.id}
-                        cards={listCards}
+                        listid={lid.id}
+                        title={lid.title}
+                        key={lid.id}
+                        boardID={lid.boardID}
                         index={index}
                       />
                     );
+                   })
                   }
-                })}
+                  </div>
+                )})}
                 {provided.placeholder}
                 <ActionButton list />
               </ListContainer>
@@ -79,9 +85,12 @@ class Board extends PureComponent {
         </div>
       </DragDropContext>
     );
+    
   }
 }
 
+
+/*
 const mapToProps = (state) => ({
   lists: state.lists,
   cards: state.cards,
@@ -89,3 +98,46 @@ const mapToProps = (state) => ({
 });
 
 export default connect(mapToProps)(Board);
+
+*/
+
+const mapToProps = (state) => {
+ const  x=state.firestore.ordered.boards
+ console.log(state)
+  return {
+    boards: state.firestore.ordered.boards,
+   
+  }
+  
+};
+
+export default compose(connect(mapToProps),
+
+
+firestoreConnect((ownprops,id) => {
+  console.log(ownprops)
+  
+
+  return[
+    
+      {
+        collection:"boards",
+        doc: ownprops.match.params.boardID,
+         subcollections:[{
+           collection:"lists",
+           
+         
+          
+           
+         }]
+      
+      }
+    
+  ]
+  
+    
+  
+
+})
+
+) (Board);

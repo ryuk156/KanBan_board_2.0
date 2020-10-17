@@ -1,11 +1,7 @@
 import { CONSTANTS } from "../action";
 
 const initialState = {
-  "board-0": {
-    id: "board-0",
-    lists: ["list-0"],
-    title: "Manage your tasks here !!!",
-  },
+  
 };
 
 const boardsReducer = (state = initialState, action) => {

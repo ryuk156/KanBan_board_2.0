@@ -1,16 +1,18 @@
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-import * as firebase from "firebase/app";
+import  firebase from "firebase/app";
 import "firebase/firestore";
+import "firebase/auth"
 
-const firebaseConfig = {
-  apiKey: "AIzaSyB72l73IoocPFesIFtvUbhA-bk9b3jq8rY",
-  authDomain: "kanban-29e23.firebaseapp.com",
-  databaseURL: "https://kanban-29e23.firebaseio.com",
-  projectId: "kanban-29e23",
-  storageBucket: "kanban-29e23.appspot.com",
-  messagingSenderId: "793650733417",
-  appId: "1:793650733417:web:53350a2a76f67484755df8",
-  measurementId: "G-V4HNF8QW75",
+
+ const firebaseConfig = {
+  apiKey: "AIzaSyA89FvuhUSVgHq8SvX0oxY_l9tFcdXILfY",
+  authDomain: "kanbanboard-3b510.firebaseapp.com",
+  databaseURL: "https://kanbanboard-3b510.firebaseio.com",
+  projectId: "kanbanboard-3b510",
+  storageBucket: "kanbanboard-3b510.appspot.com",
+  messagingSenderId: "1037907649412",
+  appId: "1:1037907649412:web:4510e4083dfe6126a573d1",
+  measurementId: "G-ERWR8HTCQ4"
 };
 
 firebase.initializeApp(firebaseConfig);

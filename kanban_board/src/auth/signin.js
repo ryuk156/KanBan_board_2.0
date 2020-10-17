@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { Paper, Typography, Button, InputBase } from "@material-ui/core";
 
-class signup extends Component {
+class signin extends Component {
     state={
         email:"",
         password:""
@@ -22,7 +22,7 @@ class signup extends Component {
     render() {
         return (
             <div>
-                signup
+                signin
                 <div
       style={{
         display: "flex",
@@ -87,9 +87,22 @@ class signup extends Component {
               elevation={3}
               type="submit"
             >
-              Sign up
+              Sign In
             </Button>
-            
+            <Button
+              elevation={3}
+              style={{
+                color: "white",
+                backgroundColor: "#3b5998",
+                width: "90%",
+                margin: "8px",
+              }}
+
+            >
+                <Link to={`/signup`} >
+              Create Your Kanban Account
+              </Link>
+            </Button>
           </div>
         </Paper>
       </div>
@@ -100,7 +113,5 @@ class signup extends Component {
     }
 }
 
-export default signup
-
-
+export default signin
 

@@ -8,12 +8,14 @@ import Form from "./Form";
 import NewButton from "./NewButton";
 import { editCard, deleteCard } from "../action";
 import { connect } from "react-redux";
+import Datepicker from './Datepicker.js'
 
 const CardContainer = styled.div`
   margin-bottom: 8px;
   position: relative;
   max-width: 300px;
   word-wrap: break-word;
+  border-left: 5px solid #3b5998 ;
 `;
 
 const EditButton = styled(EditIcon)`
@@ -81,6 +83,8 @@ const Cards = React.memo(({ text, id, listid, index, dispatch }) => {
       <Draggable draggableId={String(id)} index={index}>
         {(provided) => (
           <CardContainer
+           
+          
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             ref={provided.innerRef}
@@ -95,6 +99,7 @@ const Cards = React.memo(({ text, id, listid, index, dispatch }) => {
 
               <CardContent>
                 <Typography>{text}</Typography>
+               
               </CardContent>
             </Card>
           </CardContainer>

@@ -5,6 +5,9 @@ import Home from "../components/HomeBoard";
 import Navbar from "../components/Navbar";
 import HomeBanner from "../components/HomeBanner";
 import Login from "../auth/Login";
+import signin from "../auth/signin";
+import signup from '../auth/signup';
+
 const AppRouter = () => {
   return (
     <div style={{ margin: "0px" }}>
@@ -13,6 +16,8 @@ const AppRouter = () => {
         <Route path="/" exact component={HomeBanner} />
         <Route path="/Login" component={Login} />
         <Route path="/createboard" component={Home} />
+        <Route path="/signin" component={signin} />
+        <Route path="/signup" component={signup} />
         <Route path="/board/:boardID" component={Board} />
       </Router>
     </div>

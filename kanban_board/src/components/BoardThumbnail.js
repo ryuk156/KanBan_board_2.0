@@ -39,7 +39,7 @@ const BoardThumbnail = ({ title, bid, dispatch }) => {
   const handledeleteboard = (e) => {
     dispatch(deleteBoard(bid));
   };
-  console.log(title);
+  
   return (
     <Container>
       <Thumbnail>

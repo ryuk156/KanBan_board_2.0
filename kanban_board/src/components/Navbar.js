@@ -34,11 +34,21 @@ function Navbar() {
             className={classes.title}
             style={{ color: "white" }}
           >
-            KANBAN BOARD
+             <Link to={`/`}>
+             <Typography style={{ color: "white" }}><h4> KANBAN BOARD</h4></Typography>
+            
+          </Link>
+           
           </Typography>
-          <NavLink to={`/Login`}>
+          <Link to={`/signin`}>
             <Typography style={{ color: "white" }}>Sign In</Typography>
-          </NavLink>
+          </Link>
+          <Link to={`/signup`}>
+            <Typography style={{ color: "white" }}>Sign up</Typography>
+          </Link>
+          <Link to={`/signin`}>
+            <Typography style={{ color: "white" }}>log out</Typography>
+          </Link>
         </Toolbar>
       </AppBar>
     </div>

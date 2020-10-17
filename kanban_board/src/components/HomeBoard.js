@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import { addBoard } from "../action";
 import BoardThumbnail from "./BoardThumbnail";
 import Button from "@material-ui/core/Button";
+import {compose} from 'redux'
+import {firestoreConnect} from 'react-redux-firebase'
 
 const Thumbnails = styled.div`
   flex: 1;
@@ -45,7 +47,7 @@ const CreateInput = styled.input`
   align-self: center;
 `;
 
-const Home = ({ boards, boardOrder, dispatch }) => {
+const Home = ({ boards, dispatch }) => {
   // this is the home site that shows you your boards and you can also create a Board here.
 
   const [newBoardTitle, setNewBoardTitle] = useState("");
@@ -61,23 +63,25 @@ const Home = ({ boards, boardOrder, dispatch }) => {
   };
 
   const renderBoards = () => {
-    return boardOrder.map((boardID) => {
-      const board = boards[boardID];
-
+    return (boards && boards.map(boardID => {
+        
       return (
         <div>
           <div style={{ textAlign: "center" }}>
             <Link
               key={boardID}
-              to={`/board/${board.id}`}
+              to={`/board/${boardID.id}`}
               style={{ textDecoration: "none", padding: "10px" }}
+
             >
-              <BoardThumbnail {...board} bid={boardID} />
+              
+              <BoardThumbnail {...boardID} bid={boardID.id} />
             </Link>
           </div>
         </div>
       );
-    });
+    })
+    ) 
   };
 
   const renderCreateBoard = () => {
@@ -123,9 +127,18 @@ const Home = ({ boards, boardOrder, dispatch }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  boards: state.boards,
-  boardOrder: state.boardOrder,
-});
+const mapStateToProps = (state) => {
+  
+  console.log(state)
+  return{
+    boards: state.firestore.ordered.boards,
+   
+  }
+  
+};
 
-export default connect(mapStateToProps)(Home);
+export default compose(connect(mapStateToProps),
+firestoreConnect(ownprops => [{
+  collection:"boards", 
+}])
+)(Home);

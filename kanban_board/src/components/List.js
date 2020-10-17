@@ -15,6 +15,8 @@ const ListContainer = styled.div`
   padding: 8px;
   height: 100%;
   margin-right: 8px;
+  border-top: 5px solid #3b5998;
+  
 `;
 
 const StyledInput = styled(InputBase)`
@@ -32,7 +34,7 @@ const TitleContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-  padding-left: 8px;
+  padding: 10px;
 `;
 
 const DeleteButton = styled(DeleteIcon)`
@@ -106,7 +108,7 @@ const List = ({ title, cards, listid, index, dispatch }) => {
             type="card"
           >
             {(provided) => (
-              <div {...provided.droppableProps} ref={provided.innerRef}>
+              <div {...provided.droppableProps} ref={provided.innerRef} style={{padding:"10px"}} >
                 {isEditing ? (
                   renderEditInput()
                 ) : (
@@ -116,17 +118,6 @@ const List = ({ title, cards, listid, index, dispatch }) => {
                   </TitleContainer>
                 )}
 
-                {cards.map((card, index) => {
-                  return (
-                    <Cards
-                      text={card.text}
-                      key={card.id}
-                      id={card.id}
-                      index={index}
-                      listid={listid}
-                    />
-                  );
-                })}
                 {provided.placeholder}
                 <ActionButton card listid={listid} />
               </div>
